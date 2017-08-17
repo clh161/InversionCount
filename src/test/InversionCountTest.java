@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.io.InputStream;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -26,6 +28,7 @@ public class InversionCountTest {
         assertEquals(3, InversionCount.count(ints));
         ints = new int[]{6, 5, 4, 3, 2, 1};
         assertEquals(12, InversionCount.count(ints));
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("sample.txt");
     }
 
 }
