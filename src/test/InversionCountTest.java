@@ -41,25 +41,44 @@ public class InversionCountTest {
         int loop = 100;
         while (loop > 0) {
             loop--;
-            int len = 100;
-            Random random = new Random();
-            long[] ints = new long[len];
-            for (int i = 0; i < len; i++) {
-                int position = random.nextInt(len - i);
-                for (int j = 0; j < len; j++) {
-                    if (ints[j] == 0) {
-                        if (position == 0) {
-                            ints[j] = i + 1;
-                            break;
-                        }
-                        position--;
-                    }
-                }
-            }
-            InversionCount.count(ints);
-            for (int i = 0; i < ints.length; i++) {
-                assertEquals(i + 1, ints[i]);
+            long[] longs = getRandomArray(100);
+            InversionCount.count(longs);
+            for (int i = 0; i < longs.length; i++) {
+                assertEquals(i + 1, longs[i]);
             }
         }
+    }
+
+    @Test
+    public void bruteForce() {
+        for (int k = 0; k < 100; k++) {
+            long[] randomArray = getRandomArray(1000);
+            long count = 0;
+            for (int i = 0; i < randomArray.length; i++) {
+                for (int j = i + 1; j < randomArray.length; j++) {
+                    if (randomArray[i] > randomArray[j])
+                        count++;
+                }
+            }
+            assertEquals(count, InversionCount.count(randomArray));
+        }
+    }
+
+    private long[] getRandomArray(int len) {
+        Random random = new Random();
+        long[] ints = new long[len];
+        for (int i = 0; i < len; i++) {
+            int position = random.nextInt(len - i);
+            for (int j = 0; j < len; j++) {
+                if (ints[j] == 0) {
+                    if (position == 0) {
+                        ints[j] = i + 1;
+                        break;
+                    }
+                    position--;
+                }
+            }
+        }
+        return ints;
     }
 }
